@@ -1,0 +1,31 @@
+# Build artifacts
+/target
+**/target
+node_modules
+dist
+.venv
+
+# Spec / coordination documents are never tracked (see BUILD rules)
+SPEC*
+*SPEC*
+*EXTREME*
+PROMPT*
+*PROMPT*
+REVIEW*
+*REVIEW*
+FIX_PROMPT*
+SELFREVIEW*
+DRAFT*
+*DRAFT*
+REPORT*
+*REPORT*
+INTERFACES*
+*INTERFACES*
+STATUS*
+*STATUS*
+
+# Local state
+*.db
+*.db-wal
+*.db-shm
+*.sock

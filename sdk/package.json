@@ -1,0 +1,16 @@
+{
+  "name": "@latticeagi/watch-sdk",
+  "version": "0.1.0",
+  "description": "Thin TypeScript client for the LatticeAGI Watch sidecar control socket (watch/1).",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "private": true
+}
