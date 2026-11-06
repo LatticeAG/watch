@@ -318,7 +318,7 @@ pub fn window(v: &Value) -> R<Window> {
         counts: bins(field(m, "counts")?)?,
     };
     lit_num(field(m, "width_ms")?, crate::WINDOW_MS)?;
-    if !w.start_ms.is_multiple_of(crate::WINDOW_MS) {
+    if w.start_ms % crate::WINDOW_MS != 0 {
         return Err(schem("window start not a multiple of width"));
     }
     Ok(w)

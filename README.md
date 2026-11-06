@@ -45,25 +45,28 @@ sdk/           TypeScript SDK (Node >= 20, zero dependencies)
 
 ## Build
 
+Rust 1.83 or newer is required. Use the checked-in `Cargo.lock` for the
+verified dependency versions (`cargo build --locked`). CI checks Rust 1.83
+and stable.
+
 ```sh
 cargo build --release          # watchd, watchctl, watch-harness
 cargo test                     # conformance suite (72 vectors + lifecycle)
 ```
 
-## Lab quickstart (inert fixture profile `fixture/1`)
+## Lab fixtures
 
-The lab adapter exposes two inert tools, `record.read` and `record.write`.
-It cannot contact Stripe or any external provider.
+A ready-to-run operator lab deployment is not bundled. The conformance suite
+exercises the inert `fixture/1` profile, including `record.read` and
+`record.write`, without contacting external providers:
 
 ```sh
-watchctl doctor --config lab/config.json --trust lab/trust.json --json
-watchctl serve --config lab/config.json --lab &
-watchctl policy activate --file lab/policy.json --expected-generation 0 --request r1 --json
-watchctl run open --file lab/run.json --request r2 --json
-watchctl observe --file lab/observation.json --request r3 --json
-watchctl check --file lab/check.json --request r4 --wait --json
-watchctl verify --bundle bundle.json --trust lab/trust.json --json
+cargo test --test conformance
+cargo run --bin watch-harness -- --self-test
 ```
+
+The `mk_smoke` example generates development fixtures for a local CLI smoke
+run, but requires additional operator setup and is not a complete quickstart.
 
 Every guarded dispatch additionally requires the runtime's own authorization,
 budget reservation, target freshness, and consume-once record — a Watch

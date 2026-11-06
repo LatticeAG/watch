@@ -3,6 +3,7 @@ name = "lattice-watch"
 description = "Watch — deterministic sidecar monitors, drift detection, and audit math for guarded agent runs (LatticeAGI)"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 
