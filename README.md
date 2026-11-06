@@ -45,6 +45,10 @@ sdk/           TypeScript SDK (Node >= 20, zero dependencies)
 
 ## Build
 
+Rust 1.83 or newer is required. Use the checked-in `Cargo.lock` for the
+verified dependency versions (`cargo build --locked`). CI checks Rust 1.83
+and stable.
+
 ```sh
 cargo build --release          # watchd, watchctl, watch-harness
 cargo test                     # conformance suite (72 vectors + lifecycle)
