@@ -6,7 +6,7 @@ use watch::json::{jcs, parse, Limits};
 const VECTORS: &str = include_str!("vectors.json");
 
 fn main() {
-    let filter: Option<String> = std::env::args().nth(1);
+    let filter = std::env::args().nth(1).filter(|arg| arg != "--self-test");
     let arr = parse(VECTORS.as_bytes(), &Limits::reply()).unwrap();
     let mut pass = 0u32;
     let mut fail = 0u32;
@@ -57,5 +57,8 @@ fn main() {
         eprintln!("FAIL {f}");
     }
     println!("{{\"pass\":{pass},\"fail\":{fail}}}");
-    std::process::exit(if fail == 0 { 0 } else { 1 });
+    if pass + fail == 0 {
+        eprintln!("no vectors matched");
+    }
+    std::process::exit(if fail == 0 && pass > 0 { 0 } else { 1 });
 }
