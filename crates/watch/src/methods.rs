@@ -2038,39 +2038,38 @@ fn reviews_resolve(
     let pid = p.id.clone();
     let req = req_id.to_string();
     let mut r2 = rv.clone();
-    let kind_ev;
-    match action.as_str() {
+    let kind_ev = match action.as_str() {
         "accept_risk" => {
             let pol = d
                 .policy_for_run(&rv.run)?
                 .ok_or_else(|| f(Code::ArtifactUnavailable, "policy unavailable"))?;
             r2.state = ReviewState::Accepted;
             r2.accepted_until_ms = Some((now + pol.review_accept_ms).min(rv.due_ms));
-            kind_ev = "ReviewAccepted";
+            "ReviewAccepted"
         }
         "reject" => {
             r2.state = ReviewState::Rejected;
-            kind_ev = "ReviewRejected";
+            "ReviewRejected"
         }
         "annotate" => {
             r2.state = ReviewState::Closed;
-            kind_ev = "ReviewClosed";
+            "ReviewClosed"
         }
         "release" => {
             r2.state = ReviewState::Open;
             r2.owner = None;
             r2.lease_until_ms = None;
-            kind_ev = "ReviewReleased";
+            "ReviewReleased"
         }
         "defer" => {
             r2.state = ReviewState::Deferred;
             r2.owner = None;
             r2.lease_until_ms = None;
             r2.wake_ms = wake;
-            kind_ev = "ReviewDeferred";
+            "ReviewDeferred"
         }
         _ => unreachable!(),
-    }
+    };
     r2.revision += 1;
     r2.resolution = Some(reason);
     r2.resolved_by = Some(pid.clone());
@@ -2161,19 +2160,18 @@ fn alerts_resolve(
     let pid = p.id.clone();
     let req = req_id.to_string();
     let mut a2 = a.clone();
-    let kind_ev;
-    match action.as_str() {
+    let kind_ev = match action.as_str() {
         "acknowledge" => {
             a2.state = AlertState::Acknowledged;
-            kind_ev = "AlertAcknowledged";
+            "AlertAcknowledged"
         }
         "resolve" => {
             a2.state = AlertState::Resolved;
             a2.resolved_by = Some(pid.clone());
-            kind_ev = "AlertResolved";
+            "AlertResolved"
         }
         _ => unreachable!(),
-    }
+    };
     a2.revision += 1;
     let rev = a2.revision;
     let st_str = a2.state.as_str().to_string();
